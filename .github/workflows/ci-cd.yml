@@ -46,8 +46,9 @@ jobs:
             -e JWT_SECRET=test_secret \
             -e JWT_EXPIRES_IN=1h \
             task-management-api:latest
-          sleep 3
-          curl -f http://localhost:3000/ || exit 1
+          sleep 5
+          docker logs api-test
+          curl -f --retry 5 --retry-delay 2 http://localhost:3000/ || exit 1
           docker stop api-test
           docker rm api-test
 
